@@ -28,21 +28,21 @@ namespace ConsoleApplication1
             {
                 File.Create(@"Fu.pak").Close();
             }
-            // 读取data指定行.
-            string Chinese = File.ReadAllLines(@"data", Encoding.UTF8)[0];
-            string Fu = File.ReadAllLines(@"data", Encoding.UTF8)[1];
-            string dataLine = File.ReadAllLines(@"data", Encoding.UTF8)[7];
-            string ChineseLine = File.ReadAllLines(@"data", Encoding.UTF8)[8];
-            string FuLine = File.ReadAllLines(@"data", Encoding.UTF8)[9];
-            // 读取文件大小（字节）
-            long Chinesesize = new FileInfo("Chinese.pak").Length;
-            long Fusize = new FileInfo("Fu.pak").Length;
-            long datasize = new FileInfo("data").Length;
-            // 将 staring 转换为 long
-            long Chineseline1 = long.Parse(ChineseLine);
-            long FuLine1 = long.Parse(FuLine);
-            long dataLine1 = long.Parse(dataLine);
-            // long data = new FileInfo("data").Length;
+            /* 读取data指定行. */
+            string Chinese      = File.ReadAllLines(@"data", Encoding.UTF8)[0];
+            string Fu           = File.ReadAllLines(@"data", Encoding.UTF8)[1];
+            string dataLine     = File.ReadAllLines(@"data", Encoding.UTF8)[7];
+            string ChineseLine  = File.ReadAllLines(@"data", Encoding.UTF8)[8];
+            string FuLine       = File.ReadAllLines(@"data", Encoding.UTF8)[9];
+            /* 读取文件大小（字节） */
+            long Chinesesize    = new FileInfo("Chinese.pak").Length;
+            long Fusize         = new FileInfo("Fu.pak").Length;
+            long datasize       = new FileInfo("data").Length;
+            /* 将 staring 转换为 long */
+            long Chineseline1   = long.Parse(ChineseLine);
+            long FuLine1        = long.Parse(FuLine);
+            long dataLine1      = long.Parse(dataLine);
+            /* long data = new FileInfo("data").Length; */
             if (Chinesesize == Chineseline1)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -76,8 +76,10 @@ namespace ConsoleApplication1
                 Console.WriteLine("\n下载源 需要更新，请等待下载完成。");
                 InitiateDownload("https://resource.zomboid.cn/other/data", @"data", FileDownloadCompleted, "下载源");
             }
-            while (Console.ReadKey().KeyChar != 'q') ;
+            while (Console.ReadKey().KeyChar != 'q')
+                ;
         }
+
 
         static void InitiateDownload(string RemoteAddress, string LocalFile, AsyncCompletedEventHandler CompletedCallback, object userToken)
         {
@@ -86,25 +88,26 @@ namespace ConsoleApplication1
             wc.DownloadFileAsync(new Uri(RemoteAddress), LocalFile, userToken);
         }
 
+
         static void FileDownloadCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            string dataLine = File.ReadAllLines(@"data", Encoding.UTF8)[7];
-            string ChineseLine = File.ReadAllLines(@"data", Encoding.UTF8)[8];
-            string FuLine = File.ReadAllLines(@"data", Encoding.UTF8)[9];
-            long Chineseline1 = long.Parse(ChineseLine);
-            long FuLine1 = long.Parse(FuLine);
-            long dataLine1 = long.Parse(dataLine);
-            // 获取文件大小
+            string dataLine     = File.ReadAllLines(@"data", Encoding.UTF8)[7];
+            string ChineseLine  = File.ReadAllLines(@"data", Encoding.UTF8)[8];
+            string FuLine       = File.ReadAllLines(@"data", Encoding.UTF8)[9];
+            long Chineseline1   = long.Parse(ChineseLine);
+            long FuLine1        = long.Parse(FuLine);
+            long dataLine1      = long.Parse(dataLine);
+            /* 获取文件大小 */
             long Chinese = new FileInfo("Chinese.pak").Length;
             long Fu = new FileInfo("Fu.pak").Length;
             long data = new FileInfo("data").Length;
-            // 判断文件大小是否正确，如正确，提示成功，否则失败。
+            /* 判断文件大小是否正确，如正确，提示成功，否则失败。 */
             Console.ForegroundColor = ConsoleColor.Red;
             if (e.Error != null)
                 Console.WriteLine("\n文件 {0} 更新失败，请重试！", e.UserState);
             else
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("\n文件 {0} 更新完成。", e.UserState);
+            Console.WriteLine("\n文件 {0} 更新完成。", e.UserState);
         }
     }
 }
